@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 		images: '/logo.png',
 		countryName: 'Uzbekistan',
 		siteName: 'digi.iusi.uz',
-		emails: 'info@sammi.ac',
+		emails: 'info@iusi.uz',
 	},
 	keywords:
 		"Digi, iusi, iusi.uz, digi.iusi.uz, NextJS, online, o'qitish, NextJS dasturlash, Startup, Startup loyiha, Startup iusi, Iusi, Iusi digi,",
@@ -83,7 +83,7 @@ function RootLayout({ children, params: { lng } }: Props) {
 						<div>{children}</div>
 					</ThemeProvider>
 				</body>
-				<GoogleAnalytics gaId='adsh' />
+				<GoogleAnalytics gaId='G-9WVQMSX9GQ' />
 			</html>
 		</ClerkProvider>
 	)
