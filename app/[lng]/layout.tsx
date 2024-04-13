@@ -1,15 +1,15 @@
+import { ThemeProvider } from '@/components/providers/theme.provider'
+import { Toaster } from '@/components/ui/sonner'
+import { languages } from '@/i18n/settings'
+import { localization } from '@/lib/utils'
+import { ChildProps } from '@/types'
+import { ClerkProvider } from '@clerk/nextjs'
+import { GoogleAnalytics } from '@next/third-parties/google'
+import { dir } from 'i18next'
 import type { Metadata } from 'next'
 import { Roboto, Space_Grotesk as SpaceGrotesk } from 'next/font/google'
-import './globals.css'
-import { ChildProps } from '@/types'
-import { ThemeProvider } from '@/components/providers/theme.provider'
-import { languages } from '@/i18n/settings'
-import { dir } from 'i18next'
-import { ClerkProvider } from '@clerk/nextjs'
-import { localization } from '@/lib/utils'
-import { Toaster } from '@/components/ui/sonner'
 import NextTopLoader from 'nextjs-toploader'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import './globals.css'
 
 const roboto = Roboto({
 	subsets: ['latin', 'cyrillic'],
@@ -28,26 +28,24 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-	metadataBase: new URL('https://startup.sammi.ac'),
-	title: 'Sammi praktikum | Dasturlash kurslari',
-	description:
-		"Sammi Praktikum Next.js dasturlash kurslari, amaliyotlar, startup loyihalar va asosiysi sifatli ta'limdir.",
-	authors: [{ name: 'Samar Badriddinov', url: 'https://startup.sammi.ac' }],
-	icons: { icon: '/logo.svg' },
+	metadataBase: new URL('https://digi.iusi.uz'),
+	title: 'Digital IUSI | Online o`qitish uchun platforma',
+	description: 'Xalqaro innovatsion texnologiyalari universiteti',
+	authors: [{ name: 'Abduvoxidov Davlatbek', url: 'https://t.me/adsh97' }],
+	icons: { icon: '/logo.png' },
 	openGraph: {
-		title: 'Sammi praktikum | Dasturlash kurslari',
-		description:
-			"Sammi Praktikum Next.js dasturlash kurslari, amaliyotlar, startup loyihalar va asosiysi sifatli ta'limdir.",
+		title: 'Digital IUSI | Online o`qitish uchun platforma',
+		description: 'Xalqaro innovatsion texnologiyalari universiteti',
 		type: 'website',
-		url: 'https://startup.sammi.ac',
+		url: 'https://digi.iusi.uz',
 		locale: 'uz_UZ',
-		images: 'https://media.graphassets.com/f4jkBWQ6SVaKwySKRNQT',
+		images: '/logo.png',
 		countryName: 'Uzbekistan',
-		siteName: 'Sammi',
+		siteName: 'digi.iusi.uz',
 		emails: 'info@sammi.ac',
 	},
 	keywords:
-		"Praktikum, Praktikum sammi, NextJS, NextJS to'liq kurs, NextJS kurs, NextJS dasturlash, Startup, Startup loyiha, Startup sammi, Sammi, Sammi praktikum, Sammi dasturlash, Sammi startup, Sammi kurs, Sammi kurslari, Sammi dasturlash kurslari, Sammi startup kurslari, Sammi startup loyihalari, Sammi startup loyiha, Sammi startup loyihasi, Sammi startup loyihasi dasturlash",
+		"Digi, iusi, iusi.uz, digi.iusi.uz, NextJS, online, o'qitish, NextJS dasturlash, Startup, Startup loyiha, Startup iusi, Iusi, Iusi digi,",
 }
 
 interface Props extends ChildProps {
@@ -85,7 +83,7 @@ function RootLayout({ children, params: { lng } }: Props) {
 						<div>{children}</div>
 					</ThemeProvider>
 				</body>
-				<GoogleAnalytics gaId='G-B8NJKXCBV4' />
+				<GoogleAnalytics gaId='adsh' />
 			</html>
 		</ClerkProvider>
 	)
