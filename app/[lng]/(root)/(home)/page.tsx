@@ -1,10 +1,9 @@
 import { getFeaturedCourses } from '@/actions/course.action'
+import { getAdminInstructors } from '@/actions/user.action'
 import Categories from './_components/categories'
-import FeaturedCourses from './_components/featured-courses'
 import Hero from './_components/hero'
 import Instructor from './_components/instructor'
 import LearningJourney from './_components/learning-journey'
-import { getAdminInstructors } from '@/actions/user.action'
 
 async function Page() {
 	const courses = await getFeaturedCourses()
@@ -13,7 +12,7 @@ async function Page() {
 	return (
 		<>
 			<Hero />
-			<FeaturedCourses courses={JSON.parse(JSON.stringify(courses))} />
+			{/* <FeaturedCourses courses={JSON.parse(JSON.stringify(courses))} /> */}
 			<Categories />
 			<Instructor
 				instructors={JSON.parse(JSON.stringify(instructorData.instructors))}
