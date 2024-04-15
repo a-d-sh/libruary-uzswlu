@@ -28,7 +28,7 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-	metadataBase: new URL('https://digi.iusi.uz'),
+	metadataBase: new URL('https://digiiusi.uz'),
 	title: 'Digital IUSI | Online o`qitish uchun platforma',
 	description: 'Xalqaro innovatsion texnologiyalari universiteti',
 	authors: [{ name: 'Abduvoxidov Davlatbek', url: 'https://t.me/adsh97' }],
@@ -37,11 +37,11 @@ export const metadata: Metadata = {
 		title: 'Digital IUSI | Online o`qitish uchun platforma',
 		description: 'Xalqaro innovatsion texnologiyalari universiteti',
 		type: 'website',
-		url: 'https://digi.iusi.uz',
+		url: 'https://digiiusi.uz',
 		locale: 'uz_UZ',
 		images: '/logo.png',
 		countryName: 'Uzbekistan',
-		siteName: 'digi.iusi.uz',
+		siteName: 'digiiusi.uz',
 		emails: 'info@iusi.uz',
 	},
 	keywords:
