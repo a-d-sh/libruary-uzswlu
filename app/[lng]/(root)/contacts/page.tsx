@@ -6,7 +6,7 @@ import { Mail, Phone } from 'lucide-react'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-	title: 'Praktikum | Bog`lanish',
+	title: 'IUSI | Bog`lanish',
 	description:
 		"Agar savolingiz bo'lsa, biz bilan bog'laning. Bizning operatorlarimiz sizga yordam berishga tayyorlar.",
 }
@@ -16,8 +16,9 @@ async function Page({ params: { lng } }: LngParams) {
 	return (
 		<>
 			<TopBar label='contacts' />
+
 			<iframe
-				src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13862.031135909749!2d31.37855353790335!3d30.050683721199444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583db8b5b45af3%3A0xc70430c3420bd837!2sEl%20Mahallawy%20Hypermarket!5e0!3m2!1sru!2seg!4v1708407922577!5m2!1sru!2seg'
+				src='https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d23955.626327049013!2d69.31617838577279!3d41.36423541898553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1713141146586!5m2!1sen!2s'
 				loading='lazy'
 				className='h-96 w-full'
 			/>
@@ -34,11 +35,11 @@ async function Page({ params: { lng } }: LngParams) {
 
 						<div className='mt-12 flex items-center gap-3'>
 							<Mail className='size-4' />
-							<p className='text-sm'>info@sammi.ac</p>
+							<p className='text-sm'>t.me/adsh97</p>
 						</div>
 						<div className='mt-2 flex items-center gap-3'>
 							<Phone className='size-4' />
-							<p className='text-sm'>+98 02 296 4902</p>
+							<p className='text-sm'>+99 890 005 97 99</p>
 						</div>
 					</div>
 
