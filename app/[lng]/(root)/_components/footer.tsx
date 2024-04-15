@@ -42,16 +42,16 @@ function Footer() {
 								<div className='flex flex-col space-y-1'>
 									<a
 										className='text-sm hover:text-blue-500 hover:underline dark:hover:text-blue-300'
-										href='tel:+998900000000'
+										href='tel:+998900059799'
 									>
-										+998 (90) 000-00-00
+										+998 (90) 005-97-99
 									</a>
 									<Separator className='dark:bg-gray-500' />
 									<a
 										className='text-sm hover:text-blue-500 hover:underline dark:hover:text-blue-300'
-										href='tel:+31220777777'
+										href='tel:+998900059799'
 									>
-										+31 220 777 777
+										+998 90 005 97 99
 									</a>
 								</div>
 							</div>
@@ -60,17 +60,15 @@ function Footer() {
 								<Mail size={20} />
 								<a
 									className='text-sm hover:text-blue-500 hover:underline dark:hover:text-blue-300'
-									href='mailto:info@sammi.ac'
+									href='https://t.me/adsh97'
 								>
-									info@sammi.ac
+									ADSH
 								</a>
 							</div>
 
 							<div className='flex items-center space-x-3'>
 								<MapPin size={20} />
-								<span className='text-sm'>
-									Ronda de Elburg 30008 Geleen Niderlandia
-								</span>
+								<span className='text-sm'>Tashkent Uzbekistan</span>
 							</div>
 						</div>
 					</div>
