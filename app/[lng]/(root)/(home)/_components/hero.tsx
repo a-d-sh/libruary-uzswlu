@@ -39,7 +39,7 @@ function Hero() {
 				</div>
 
 				<Image
-					src={'/assets/hero.png'}
+					src={'/assets/hero.jpg'}
 					alt='hero'
 					width={520}
 					height={520}
