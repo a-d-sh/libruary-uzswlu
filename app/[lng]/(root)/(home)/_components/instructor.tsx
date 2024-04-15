@@ -14,7 +14,7 @@ function Instructor({ instructors }: Props) {
 	const t = useTranslate()
 
 	return (
-		<div className='container mx-auto max-w-4xl py-12'>
+		<div className='container mx-auto max-w-6xl py-12'>
 			<div className='flex items-center justify-between'>
 				<div className='flex flex-col space-y-1'>
 					<h1 className='font-space-grotesk text-3xl font-bold'>
