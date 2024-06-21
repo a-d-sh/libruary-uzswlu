@@ -10,7 +10,6 @@ import useTranslate from '@/hooks/use-translate'
 import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs'
 import { LogIn, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
-import { useParams, usePathname } from 'next/navigation'
 import GlobalSearch from './global-search'
 import Mobile from './mobile'
 // import { cn } from '@/lib/utils'
@@ -19,8 +18,8 @@ import { useCart } from '@/hooks/use-cart'
 
 function Navbar() {
 	const t = useTranslate()
-	const pathname = usePathname()
-	const { lng } = useParams()
+	// const pathname = usePathname()
+	// const { lng } = useParams()
 	const { cartsLength } = useCart()
 
 	return (
