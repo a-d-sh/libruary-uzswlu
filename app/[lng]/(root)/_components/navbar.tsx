@@ -3,19 +3,19 @@
 import Logo from '@/components/shared/logo'
 import ModeToggle from '@/components/shared/mode-toggle'
 import { Button } from '@/components/ui/button'
-import { navLinks } from '@/constants'
-import { LogIn, ShoppingCart } from 'lucide-react'
-import Link from 'next/link'
-import GlobalSearch from './global-search'
+// import { navLinks } from '@/constants'
 import LanguageDropdown from '@/components/shared/language-dropdown'
-import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs'
 import UserBox from '@/components/shared/user-box'
 import useTranslate from '@/hooks/use-translate'
-import Mobile from './mobile'
+import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs'
+import { LogIn, ShoppingCart } from 'lucide-react'
+import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { useCart } from '@/hooks/use-cart'
+import GlobalSearch from './global-search'
+import Mobile from './mobile'
+// import { cn } from '@/lib/utils'
 import Notification from '@/components/shared/notification'
+import { useCart } from '@/hooks/use-cart'
 
 function Navbar() {
 	const t = useTranslate()
@@ -29,7 +29,7 @@ function Navbar() {
 				<div className='flex items-center gap-4'>
 					<Logo />
 					<div className='hidden items-center gap-3 border-l pl-2 md:flex'>
-						{navLinks.map(nav => (
+						{/* {navLinks.map(nav => (
 							<Link
 								href={`/${nav.route}`}
 								key={nav.route}
@@ -41,7 +41,7 @@ function Navbar() {
 							>
 								{t(nav.name)}
 							</Link>
-						))}
+						))} */}
 					</div>
 				</div>
 
