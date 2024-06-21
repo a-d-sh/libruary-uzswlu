@@ -1,8 +1,11 @@
+import {
+	getDetailedCourse,
+	getFeaturedCourses,
+	getIsPurchase,
+} from '@/actions/course.action'
+import { ICourse } from '@/app.types'
+import CourseCard from '@/components/cards/course.card'
 import TopBar from '@/components/shared/top-bar'
-import Hero from './_components/hero'
-import Overview from './_components/overview'
-import Description from './_components/description'
-import { Separator } from '@/components/ui/separator'
 import {
 	Carousel,
 	CarouselContent,
@@ -10,16 +13,13 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from '@/components/ui/carousel'
-import CourseCard from '@/components/cards/course.card'
+import { Separator } from '@/components/ui/separator'
 import { translation } from '@/i18n/server'
-import {
-	getDetailedCourse,
-	getFeaturedCourses,
-	getIsPurchase,
-} from '@/actions/course.action'
-import { ICourse } from '@/app.types'
 import { auth } from '@clerk/nextjs'
 import { Metadata, ResolvingMetadata } from 'next'
+import Description from './_components/description'
+import Hero from './_components/hero'
+import Overview from './_components/overview'
 
 export async function generateMetadata(
 	{ params }: { params: { slug: string } },
@@ -58,7 +58,7 @@ async function Page({ params: { lng, slug } }: Props) {
 
 	return (
 		<>
-			<TopBar label='allCourses' extra='Full Courses ReactJS' />
+			<TopBar label='allCourses' extra='Book' />
 
 			<div className='container mx-auto max-w-6xl'>
 				<div className='grid grid-cols-3 gap-4 pt-12'>
