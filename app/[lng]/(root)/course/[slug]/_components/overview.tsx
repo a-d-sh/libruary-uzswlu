@@ -1,26 +1,19 @@
 'use client'
 
+import { getCourseReviews } from '@/actions/review.action'
 import { getCourseSections } from '@/actions/section.action'
 import { ICourse, IReview, ISection } from '@/app.types'
 import ReviewCard from '@/components/cards/review.card'
+import NoResult from '@/components/shared/no-result'
+import ReviewLoading from '@/components/shared/review-loading'
+import SectionLoading from '@/components/shared/section-loading'
 import { Accordion } from '@/components/ui/accordion'
 import { Separator } from '@/components/ui/separator'
 import useTranslate from '@/hooks/use-translate'
-import {
-	BadgeCheck,
-	CalendarRange,
-	Dot,
-	ListOrdered,
-	MonitorPlay,
-	Star,
-} from 'lucide-react'
+import { BadgeCheck, Dot, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import SectionList from './section-list'
-import SectionLoading from '@/components/shared/section-loading'
-import { getCourseReviews } from '@/actions/review.action'
 import AllReviews from './all-reviews'
-import NoResult from '@/components/shared/no-result'
-import ReviewLoading from '@/components/shared/review-loading'
+import SectionList from './section-list'
 
 function Overview(course: ICourse) {
 	const [isLoading, setIsLoading] = useState(true)
@@ -67,39 +60,6 @@ function Overview(course: ICourse) {
 			</div>
 
 			<div className='mt-8 rounded-md bg-gradient-to-b from-background to-secondary p-4 lg:p-6'>
-				<h2 className='font-space-grotesk text-3xl font-bold'>
-					{t('courseContent')}
-				</h2>
-
-				<div className='mt-2 flex flex-row flex-wrap gap-8'>
-					<div className='flex flex-col'>
-						<ListOrdered className='size-10 ' />
-						<p className='font-space-grotesk text-xl font-bold'>
-							{t('numberOfModules')}
-						</p>
-						<div className='text-2xl font-medium'>{course.totalSections}</div>
-					</div>
-
-					<div className='flex flex-col'>
-						<MonitorPlay className='size-10 ' />
-						<p className='font-space-grotesk text-xl font-bold'>
-							{t('numberOfLessons')}
-						</p>
-						<div className='text-2xl font-medium'>{course.totalLessons}</div>
-					</div>
-
-					<div className='flex flex-col '>
-						<CalendarRange className='size-10 ' />
-						<p className='font-space-grotesk text-xl font-bold'>
-							{t('courseDuration')}
-						</p>
-						<div className='text-2xl font-medium'>
-							{course.totalDuration.split('.')[0]} {t('hours')}{' '}
-							{course.totalDuration.split('.')[1]} {t('minutes')}
-						</div>
-					</div>
-				</div>
-
 				<Separator className='my-3' />
 				{isLoading ? (
 					<div className='mt-4 flex flex-col gap-1'>
