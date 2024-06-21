@@ -29,23 +29,23 @@ export async function generateStaticParams() {
 
 export const metadata: Metadata = {
 	metadataBase: new URL('https://digiiusi.uz'),
-	title: 'Digital IUSI | Online o`qitish uchun platforma',
-	description: 'Xalqaro innovatsion texnologiyalari universiteti',
+	title: 'Libruary | Online savdo uchun platforma',
+	description: 'Uzswlu.uz sayti uchun online savdo platformasi',
 	authors: [{ name: 'Abduvoxidov Davlatbek', url: 'https://t.me/adsh97' }],
 	icons: { icon: '/logo.png' },
 	openGraph: {
-		title: 'Digital IUSI | Online o`qitish uchun platforma',
-		description: 'Xalqaro innovatsion texnologiyalari universiteti',
+		title: 'Libruary | Online savdo uchun platforma',
+		description: 'Uzswlu.uz sayti uchun online savdo platformasi',
 		type: 'website',
 		url: 'https://digiiusi.uz',
 		locale: 'uz_UZ',
 		images: '/logo.png',
 		countryName: 'Uzbekistan',
 		siteName: 'digiiusi.uz',
-		emails: 'info@iusi.uz',
+		emails: 'davlatbek.abduvoxidov@gmail.com',
 	},
 	keywords:
-		"Digi, iusi, iusi.uz, digi.iusi.uz, NextJS, online, o'qitish, NextJS dasturlash, Startup, Startup loyiha, Startup iusi, Iusi, Iusi digi,",
+		'Book, Libruary, kutubxona, kitoblar, uzswlu, kutubxona jahon tillari, online kitob sotib olish, arm kutubxona',
 }
 
 interface Props extends ChildProps {
