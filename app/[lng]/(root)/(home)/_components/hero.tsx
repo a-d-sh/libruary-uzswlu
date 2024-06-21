@@ -29,7 +29,7 @@ function Hero() {
 				</div>
 
 				<Image
-					src={'/book33.png'}
+					src={'/book33.jpg'}
 					alt='hero'
 					width={520}
 					height={520}
