@@ -25,11 +25,6 @@ function Hero() {
 								{t('findCourses')}
 							</Button>
 						</Link>
-						<Link href={'/courses'}>
-							<Button size={'lg'} rounded={'full'}>
-								{t('blogs')}
-							</Button>
-						</Link>
 					</div>
 				</div>
 
