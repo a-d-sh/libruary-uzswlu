@@ -2,7 +2,7 @@ import { getFeaturedCourses } from '@/actions/course.action'
 // import { getAdminInstructors } from '@/actions/user.action'
 // import Categories from './_components/categories'
 import FeaturedCourses from './_components/featured-courses'
-// import Hero from './_components/hero'
+import Hero from './_components/hero'
 // import Instructor from './_components/instructor'
 // import LearningJourney from './_components/learning-journey'
 
@@ -12,7 +12,7 @@ async function Page() {
 
 	return (
 		<>
-			{/* <Hero /> */}
+			<Hero />
 			<FeaturedCourses courses={JSON.parse(JSON.stringify(courses))} />
 			{/* <Categories /> */}
 			{/* <Instructor
