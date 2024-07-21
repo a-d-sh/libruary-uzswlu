@@ -20,10 +20,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<ClerkProvider
-			frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API}
-			domain={process.env.NEXT_PUBLIC_CLERK_SUBDOMAIN}
-		>
+		<ClerkProvider>
 			<html lang='en'>
 				<body className={`${raleway.className} min-h-screen`}>
 					<LayoutProvider>{children}</LayoutProvider>
