@@ -194,12 +194,21 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 							<button
 								onClick={nextQuestion}
 								disabled={!checked}
-								className='font-bold'
+								className='font-bold flex justify-center mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700'
 							>
 								{activeQuestion === questions.length - 1
 									? 'Finish'
 									: 'Next Question →'}
 							</button>
+							{/* <button
+								onClick={nextQuestion}
+								disabled={!checked}
+								className='font-bold'
+							>
+								{activeQuestion === questions.length - 1
+									? 'Finish'
+									: 'Next Question →'}
+							</button> */}
 						</div>
 					</>
 				) : (
