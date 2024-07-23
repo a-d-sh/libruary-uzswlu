@@ -198,12 +198,12 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 						<div className='grid lg:grid-cols-1 md:grid-cols-2 gap-10'>
 							<StatCard title=' Total Score' value={`${results.score}`} />
 						</div>
-						<button
+						{/* <button
 							onClick={() => window.location.reload()}
 							className='mt-10 font-bold uppercase'
 						>
 							Restart Quiz
-						</button>
+						</button> */}
 					</div>
 				)}
 			</div>
