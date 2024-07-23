@@ -194,6 +194,8 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 							/>
 							<StatCard title='Wrong Answers' value={results.wrongAnswers} />
 							<StatCard title='Total Questions' value={questions.length} />
+						</div>
+						<div className='grid lg:grid-cols-1 md:grid-cols-2 gap-10'>
 							<StatCard title=' Total Score' value={`${results.score}`} />
 						</div>
 						<button
