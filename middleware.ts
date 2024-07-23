@@ -1,8 +1,14 @@
 import { authMiddleware } from '@clerk/nextjs'
+import { NextResponse } from 'next/server'
 
 export default authMiddleware({
 	publicRoutes: [],
-	redirectTo: 'https://accounts.digiiusi.uz/sign-in',
+	afterAuth(auth, req) {
+		if (!auth.userId) {
+			const signInUrl = 'https://accounts.digiiusi.uz/sign-in'
+			return NextResponse.redirect(signInUrl)
+		}
+	},
 })
 
 export const config = {
