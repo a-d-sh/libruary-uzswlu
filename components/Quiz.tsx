@@ -24,7 +24,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 		correctAnswers: 0,
 		wrongAnswers: 0,
 	})
-	const [timeRemaining, setTimeRemaining] = useState(60)
+	const [timeRemaining, setTimeRemaining] = useState(20)
 	const [timerRunning, setTimerRunning] = useState(false)
 
 	const { question, answers, correctAnswer } = questions[activeQuestion]
