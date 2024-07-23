@@ -145,10 +145,10 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 						</div>
 
 						<div>
-							<h3
-								className='mb-5 text-2xl font-bold'
+							<p
+								className='mb-5 text-2xl'
 								dangerouslySetInnerHTML={{ __html: sanitizedQuestion }}
-							></h3>
+							></p>
 							<ul>
 								{answers.map((answer: string, idx: number) => (
 									<li
