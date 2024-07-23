@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import sanitizeHtml from 'sanitize-html'
 import StatCard from './StatCard'
-
 interface QuizProps {
 	questions: {
 		question: string
@@ -25,7 +24,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 		correctAnswers: 0,
 		wrongAnswers: 0,
 	})
-	const [timeRemaining, setTimeRemaining] = useState(20)
+	const [timeRemaining, setTimeRemaining] = useState(600)
 	const [timerRunning, setTimerRunning] = useState(false)
 
 	const { question, answers, correctAnswer } = questions[activeQuestion]
@@ -51,7 +50,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 	}
 
 	const resetTimer = () => {
-		setTimeRemaining(25)
+		setTimeRemaining(600)
 	}
 
 	const handleTimeUp = () => {
@@ -126,15 +125,12 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 		resetTimer()
 		startTimer()
 	}
-
-	// Sanitize and allow Tailwind CSS classes
 	const sanitizedQuestion = sanitizeHtml(question, {
 		allowedTags: sanitizeHtml.defaults.allowedTags.concat(['div', 'p']),
 		allowedAttributes: {
 			'*': ['class'],
 		},
 	})
-
 	return (
 		<div className='min-h-[500px]'>
 			<div className='max-w-[1500px] mx-auto w-[90%] flex justify-center py-10 flex-col'>
