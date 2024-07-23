@@ -1,7 +1,14 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { authMiddleware, Redirect } from '@clerk/nextjs'
 
-export default authMiddleware({});
- 
+export default authMiddleware({
+	async requireSignIn({ event, resolver }) {
+		const user = await resolver.session.user()
+		if (!user) {
+			return Redirect.to('https://accounts.digiiusi.uz/sign-in')
+		}
+	},
+})
+
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-};
+	matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+}

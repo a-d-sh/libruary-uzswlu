@@ -10,7 +10,7 @@ const raleway = Raleway({
 })
 
 export const metadata: Metadata = {
-	title: 'Quiz',
+	title: 'Quiz platforma',
 	description: 'English test',
 }
 
@@ -22,7 +22,14 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang='en'>
-				<body className={`${raleway.className} min-h-screen`}>
+				<head>
+					<title>{metadata.title}</title>
+					<meta name='description' content={metadata.description} />
+					<style>{`body { ${raleway.className} min-h-screen; }`}</style>
+					<link rel='preconnect' href='https://fonts.gstatic.com' />
+					<link href={raleway.href} rel='stylesheet' />
+				</head>
+				<body className='min-h-screen'>
 					<LayoutProvider>{children}</LayoutProvider>
 				</body>
 			</html>
