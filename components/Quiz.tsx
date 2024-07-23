@@ -11,6 +11,20 @@ interface QuizProps {
 		correctAnswer: string
 	}[]
 	userId: string | undefined
+	user: {
+		data: {
+			user: {
+				id: string
+				username: string
+				email: string | null
+				profilePic: string
+				clerkUserId: string
+				createdAt: Date
+				updatedAt: Date
+			}
+			quizResults: any[] // Ma'lumotlaringizning haqiqiy tuzilishiga moslashtiring
+		}
+	}
 }
 
 const Quiz = ({ questions, userId, user }: QuizProps) => {
