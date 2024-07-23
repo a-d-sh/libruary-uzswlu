@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import sanitizeHtml from 'sanitize-html'
 import StatCard from './StatCard'
+
 interface QuizProps {
 	questions: {
 		question: string
@@ -26,6 +27,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 	})
 	const [timeRemaining, setTimeRemaining] = useState(600)
 	const [timerRunning, setTimerRunning] = useState(false)
+	const [timeUp, setTimeUp] = useState(false)
 
 	const { question, answers, correctAnswer } = questions[activeQuestion]
 
@@ -54,9 +56,9 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 	}
 
 	const handleTimeUp = () => {
+		setTimeUp(true)
 		stopTimer()
 		resetTimer()
-		nextQuestion()
 	}
 
 	useEffect(() => {
@@ -78,59 +80,63 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 	}
 
 	const nextQuestion = () => {
-		setSelectedAnswerIndex(null)
-		setResults(prev =>
-			selectedAnswer
-				? {
-						...prev,
-						score: prev.score + 5,
-						correctAnswers: prev.correctAnswers + 1,
-					}
-				: {
-						...prev,
-						wrongAnswers: prev.wrongAnswers + 1,
-					}
-		)
-		if (activeQuestion !== questions.length - 1) {
-			setActiveQuestion(prev => prev + 1)
-		} else {
-			setShowResults(true)
-			stopTimer()
-			fetch('/api/quizResults', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					userId: userId,
-					quizScore: results.score,
-					correctAnswers: results.correctAnswers,
-					wrongAnswers: results.wrongAnswers,
-				}),
-			})
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Network response was not working fam')
-					}
-					return response.json()
+		if (!timeUp) {
+			setSelectedAnswerIndex(null)
+			setResults(prev =>
+				selectedAnswer
+					? {
+							...prev,
+							score: prev.score + 5,
+							correctAnswers: prev.correctAnswers + 1,
+						}
+					: {
+							...prev,
+							wrongAnswers: prev.wrongAnswers + 1,
+						}
+			)
+			if (activeQuestion !== questions.length - 1) {
+				setActiveQuestion(prev => prev + 1)
+			} else {
+				setShowResults(true)
+				stopTimer()
+				fetch('/api/quizResults', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						userId: userId,
+						quizScore: results.score,
+						correctAnswers: results.correctAnswers,
+						wrongAnswers: results.wrongAnswers,
+					}),
 				})
-				.then(data => {
-					console.log('Quiz results saved successfully:', data)
-				})
-				.catch(error => {
-					console.error('Error saving quiz results:', error)
-				})
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Network response was not working fam')
+						}
+						return response.json()
+					})
+					.then(data => {
+						console.log('Quiz results saved successfully:', data)
+					})
+					.catch(error => {
+						console.error('Error saving quiz results:', error)
+					})
+			}
+			setChecked(false)
+			resetTimer()
+			startTimer()
 		}
-		setChecked(false)
-		resetTimer()
-		startTimer()
 	}
+
 	const sanitizedQuestion = sanitizeHtml(question, {
 		allowedTags: sanitizeHtml.defaults.allowedTags.concat(['div', 'p']),
 		allowedAttributes: {
 			'*': ['class'],
 		},
 	})
+
 	return (
 		<div className='min-h-[500px]'>
 			<div className='max-w-[1500px] mx-auto w-[90%] flex justify-center py-10 flex-col'>
