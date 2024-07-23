@@ -25,7 +25,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 		correctAnswers: 0,
 		wrongAnswers: 0,
 	})
-	const [timeRemaining, setTimeRemaining] = useState(20)
+	const [totalTimeRemaining, setTotalTimeRemaining] = useState(900) // 15 daqiqa = 900 sekund
 	const [timerRunning, setTimerRunning] = useState(false)
 	const [timeUp, setTimeUp] = useState(false)
 
@@ -33,15 +33,15 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 
 	useEffect(() => {
 		let timer: NodeJS.Timeout
-		if (timerRunning && timeRemaining > 0) {
+		if (timerRunning && totalTimeRemaining > 0) {
 			timer = setTimeout(() => {
-				setTimeRemaining(prevTime => prevTime - 1)
+				setTotalTimeRemaining(prevTime => prevTime - 1)
 			}, 1000)
-		} else if (timeRemaining === 0) {
+		} else if (totalTimeRemaining === 0) {
 			handleTimeUp()
 		}
 		return () => clearTimeout(timer)
-	}, [timerRunning, timeRemaining])
+	}, [timerRunning, totalTimeRemaining])
 
 	const startTimer = () => {
 		setTimerRunning(true)
@@ -51,14 +51,34 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 		setTimerRunning(false)
 	}
 
-	const resetTimer = () => {
-		setTimeRemaining(20)
-	}
-
 	const handleTimeUp = () => {
 		setTimeUp(true)
 		stopTimer()
-		resetTimer()
+		setShowResults(true)
+		fetch('/api/quizResults', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				userId: userId,
+				quizScore: results.score,
+				correctAnswers: results.correctAnswers,
+				wrongAnswers: results.wrongAnswers,
+			}),
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not working fam')
+				}
+				return response.json()
+			})
+			.then(data => {
+				console.log('Quiz results saved successfully:', data)
+			})
+			.catch(error => {
+				console.error('Error saving quiz results:', error)
+			})
 	}
 
 	useEffect(() => {
@@ -125,8 +145,6 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 					})
 			}
 			setChecked(false)
-			resetTimer()
-			startTimer()
 		}
 	}
 
@@ -151,7 +169,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 							</div>
 
 							<div className='bg-primary text-white px-4 rounded-md py-1'>
-								{timeRemaining} seconds to answer
+								{totalTimeRemaining} seconds remaining
 							</div>
 						</div>
 
