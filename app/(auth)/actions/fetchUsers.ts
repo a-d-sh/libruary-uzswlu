@@ -5,33 +5,40 @@ import { currentUser } from '@clerk/nextjs'
 export const fetchUsers = async () => {
 	try {
 		const clerkUser = await currentUser()
-		let mongoUser = null
-		mongoUser = await prisma.user.findUnique({
+		if (!clerkUser) {
+			throw new Error('No current user found')
+		}
+
+		// Foydalanuvchini bazadan qidirish
+		let mongoUser = await prisma.user.findUnique({
 			where: {
-				clerkUserId: clerkUser?.id,
+				clerkUserId: clerkUser.id,
 			},
 		})
 
+		// Foydalanuvchi topilmasa, yangi foydalanuvchi yaratish
 		if (!mongoUser) {
-			let username = clerkUser?.username
-			if (!username) {
-				username = clerkUser?.firstName + ' ' + clerkUser?.lastName
-			}
+			const username =
+				clerkUser.username ||
+				`${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`
 			const email =
-				clerkUser?.emailAddresses.length > 0
+				clerkUser.emailAddresses.length > 0
 					? clerkUser.emailAddresses[0].emailAddress
-					: `${clerkUser?.id}@noemail.com`
-			const newUser: any = {
-				clerkUserId: clerkUser?.id,
+					: `${clerkUser.id}@noemail.com`
+
+			const newUser = {
+				clerkUserId: clerkUser.id,
 				username,
 				email,
-				profilePic: clerkUser?.imageUrl,
+				profilePic: clerkUser.imageUrl || '',
 			}
+
 			mongoUser = await prisma.user.create({
 				data: newUser,
 			})
 		}
 
+		// Foydalanuvchi uchun quiz natijalarini olish
 		const quizResults = await prisma.quizResult.findMany({
 			where: {
 				userId: mongoUser.id,
@@ -45,6 +52,7 @@ export const fetchUsers = async () => {
 			},
 		}
 	} catch (error) {
-		console.log(error)
+		console.error('Error fetching users:', error)
+		throw new Error('Failed to fetch user data')
 	}
 }
