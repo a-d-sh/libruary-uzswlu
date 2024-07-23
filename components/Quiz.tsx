@@ -25,7 +25,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 		correctAnswers: 0,
 		wrongAnswers: 0,
 	})
-	const [timeRemaining, setTimeRemaining] = useState(600)
+	const [timeRemaining, setTimeRemaining] = useState(20)
 	const [timerRunning, setTimerRunning] = useState(false)
 	const [timeUp, setTimeUp] = useState(false)
 
@@ -52,7 +52,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 	}
 
 	const resetTimer = () => {
-		setTimeRemaining(600)
+		setTimeRemaining(20)
 	}
 
 	const handleTimeUp = () => {
@@ -194,7 +194,7 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 							/>
 							<StatCard title='Wrong Answers' value={results.wrongAnswers} />
 							<StatCard title='Total Questions' value={questions.length} />
-							<StatCard title=' Total Score' value={results.score} />
+							<StatCard title=' Total Score' value={`${results.score}`} />
 						</div>
 						<button
 							onClick={() => window.location.reload()}
