@@ -183,16 +183,12 @@ const Quiz = ({ questions, userId }: QuizProps) => {
 						<h3 className='text-2xl uppercase mb-10'>Results 📈</h3>
 						<div className='grid lg:grid-cols-3 md:grid-cols-2 gap-10'>
 							<StatCard
-								title='Percentage'
-								value={`${(results.score / 50) * 100}%`}
-							/>
-							<StatCard title='Total Questions' value={questions.length} />
-							<StatCard title=' Total Score' value={results.score} />
-							<StatCard
 								title='Correct Answers'
 								value={results.correctAnswers}
 							/>
 							<StatCard title='Wrong Answers' value={results.wrongAnswers} />
+							<StatCard title='Total Questions' value={questions.length} />
+							<StatCard title=' Total Score' value={results.score} />
 						</div>
 						<button
 							onClick={() => window.location.reload()}
