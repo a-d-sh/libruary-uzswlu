@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import sanitizeHtml from 'sanitize-html'
 import StatCard from './StatCard'
@@ -12,7 +13,14 @@ interface QuizProps {
 	userId: string | undefined
 }
 
-const Quiz = ({ questions, userId }: QuizProps) => {
+const Quiz = ({ questions, userId, user }: QuizProps) => {
+	const router = useRouter()
+
+	useEffect(() => {
+		if (user?.data?.quizResults?.length > 0) {
+			router.push('/stats')
+		}
+	}, [user, router])
 	const [activeQuestion, setActiveQuestion] = useState(0)
 	const [selectedAnswer, setSelectedAnswer] = useState('')
 	const [checked, setChecked] = useState(false)
