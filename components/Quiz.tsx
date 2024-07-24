@@ -52,10 +52,7 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 			? JSON.parse(savedResults)
 			: { score: 0, correctAnswers: 0, wrongAnswers: 0 }
 	})
-	const [totalTimeRemaining, setTotalTimeRemaining] = useState(() => {
-		const savedTime = localStorage.getItem('totalTimeRemaining')
-		return savedTime ? parseInt(savedTime) : 900
-	})
+	const [totalTimeRemaining, setTotalTimeRemaining] = useState(900)
 	const [timerRunning, setTimerRunning] = useState(false)
 	const [timeUp, setTimeUp] = useState(false)
 
@@ -70,42 +67,23 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 	}, [results])
 
 	useEffect(() => {
-		localStorage.setItem('totalTimeRemaining', totalTimeRemaining.toString())
-	}, [totalTimeRemaining])
-
-	useEffect(() => {
-		let timer: NodeJS.Timeout
-		if (timerRunning && totalTimeRemaining > 0) {
-			timer = setTimeout(() => {
-				setTotalTimeRemaining(prevTime => prevTime - 1)
-			}, 1000)
-		} else if (totalTimeRemaining === 0) {
-			handleTimeUp()
+		let startTime = localStorage.getItem('quizStartTime')
+		if (!startTime) {
+			startTime = Date.now().toString()
+			localStorage.setItem('quizStartTime', startTime)
 		}
-		return () => clearTimeout(timer)
-	}, [timerRunning, totalTimeRemaining])
+		const interval = setInterval(() => {
+			const elapsed = Math.floor((Date.now() - parseInt(startTime!)) / 1000)
+			const remaining = 900 - elapsed
+			if (remaining <= 0) {
+				handleTimeUp()
+				clearInterval(interval)
+			} else {
+				setTotalTimeRemaining(remaining)
+			}
+		}, 1000)
 
-	const startTimer = () => {
-		setTimerRunning(true)
-	}
-
-	const stopTimer = () => {
-		setTimerRunning(false)
-	}
-
-	const handleTimeUp = () => {
-		setTimeUp(true)
-		stopTimer()
-		setShowResults(true)
-		saveQuizResults(results)
-	}
-
-	useEffect(() => {
-		startTimer()
-
-		return () => {
-			stopTimer()
-		}
+		return () => clearInterval(interval)
 	}, [])
 
 	const onAnswerSelected = (answer: string, idx: number) => {
@@ -137,7 +115,6 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 				setActiveQuestion(prev => prev + 1)
 			} else {
 				setShowResults(true)
-				stopTimer()
 				saveQuizResults(newResults)
 			}
 			setChecked(false)
@@ -175,6 +152,12 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 			})
 	}
 
+	const handleTimeUp = () => {
+		setTimeUp(true)
+		setShowResults(true)
+		saveQuizResults(results)
+	}
+
 	const sanitizedQuestion = sanitizeHtml(question, {
 		allowedTags: sanitizeHtml.defaults.allowedTags.concat(['div', 'p']),
 		allowedAttributes: {
@@ -193,7 +176,6 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 									Question: {activeQuestion + 1}
 									<span>/{questions.length}</span>
 								</h2>
-								{/* Savollar ketma-ketligi */}
 							</div>
 
 							<div className='bg-primary text-white px-4 rounded-md py-1'>
