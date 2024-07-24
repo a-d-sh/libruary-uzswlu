@@ -193,6 +193,7 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 									Question: {activeQuestion + 1}
 									<span>/{questions.length}</span>
 								</h2>
+								{/* Savollar ketma-ketligi */}
 							</div>
 
 							<div className='bg-primary text-white px-4 rounded-md py-1'>
