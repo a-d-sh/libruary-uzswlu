@@ -67,21 +67,39 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 	}, [results])
 
 	useEffect(() => {
-		let startTime = localStorage.getItem('quizStartTime')
-		if (!startTime) {
-			startTime = Date.now().toString()
-			localStorage.setItem('quizStartTime', startTime)
-		}
-		const interval = setInterval(() => {
-			const elapsed = Math.floor((Date.now() - parseInt(startTime!)) / 1000)
+		const startTime = localStorage.getItem('quizStartTime')
+		let interval: NodeJS.Timeout
+		if (startTime) {
+			const elapsed = Math.floor((Date.now() - parseInt(startTime)) / 1000)
 			const remaining = 900 - elapsed
-			if (remaining <= 0) {
-				handleTimeUp()
-				clearInterval(interval)
+			setTotalTimeRemaining(remaining)
+			if (remaining > 0) {
+				interval = setInterval(() => {
+					setTotalTimeRemaining(prevTime => {
+						const newTime = prevTime - 1
+						if (newTime <= 0) {
+							handleTimeUp()
+							clearInterval(interval)
+						}
+						return newTime
+					})
+				}, 1000)
 			} else {
-				setTotalTimeRemaining(remaining)
+				handleTimeUp()
 			}
-		}, 1000)
+		} else {
+			localStorage.setItem('quizStartTime', Date.now().toString())
+			interval = setInterval(() => {
+				setTotalTimeRemaining(prevTime => {
+					const newTime = prevTime - 1
+					if (newTime <= 0) {
+						handleTimeUp()
+						clearInterval(interval)
+					}
+					return newTime
+				})
+			}, 1000)
+		}
 
 		return () => clearInterval(interval)
 	}, [])
