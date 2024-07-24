@@ -22,7 +22,7 @@ interface QuizProps {
 				createdAt: Date
 				updatedAt: Date
 			}
-			quizResults: any[] // Ma'lumotlaringizning haqiqiy tuzilishiga moslashtiring
+			quizResults: any[]
 		}
 	}
 }
@@ -36,23 +36,42 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 		}
 	}, [user, router])
 
-	const [activeQuestion, setActiveQuestion] = useState(0)
+	const [activeQuestion, setActiveQuestion] = useState(() => {
+		const savedQuestion = localStorage.getItem('activeQuestion')
+		return savedQuestion ? parseInt(savedQuestion) : 0
+	})
 	const [selectedAnswer, setSelectedAnswer] = useState('')
 	const [checked, setChecked] = useState(false)
 	const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(
 		null
 	)
 	const [showResults, setShowResults] = useState(false)
-	const [results, setResults] = useState({
-		score: 0,
-		correctAnswers: 0,
-		wrongAnswers: 0,
+	const [results, setResults] = useState(() => {
+		const savedResults = localStorage.getItem('quizResults')
+		return savedResults
+			? JSON.parse(savedResults)
+			: { score: 0, correctAnswers: 0, wrongAnswers: 0 }
 	})
-	const [totalTimeRemaining, setTotalTimeRemaining] = useState(900) // 15 daqiqa = 900 sekund
+	const [totalTimeRemaining, setTotalTimeRemaining] = useState(() => {
+		const savedTime = localStorage.getItem('totalTimeRemaining')
+		return savedTime ? parseInt(savedTime) : 900
+	})
 	const [timerRunning, setTimerRunning] = useState(false)
 	const [timeUp, setTimeUp] = useState(false)
 
 	const { question, answers, correctAnswer } = questions[activeQuestion]
+
+	useEffect(() => {
+		localStorage.setItem('activeQuestion', activeQuestion.toString())
+	}, [activeQuestion])
+
+	useEffect(() => {
+		localStorage.setItem('quizResults', JSON.stringify(results))
+	}, [results])
+
+	useEffect(() => {
+		localStorage.setItem('totalTimeRemaining', totalTimeRemaining.toString())
+	}, [totalTimeRemaining])
 
 	useEffect(() => {
 		let timer: NodeJS.Timeout
