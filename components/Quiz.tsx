@@ -104,6 +104,14 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 		return () => clearInterval(interval)
 	}, [])
 
+	const formatTime = (seconds: number) => {
+		const minutes = Math.floor(seconds / 60)
+		const remainingSeconds = seconds % 60
+		return `${minutes.toString().padStart(2, '0')}:${remainingSeconds
+			.toString()
+			.padStart(2, '0')}`
+	}
+
 	const onAnswerSelected = (answer: string, idx: number) => {
 		setChecked(true)
 		setSelectedAnswerIndex(idx)
@@ -204,7 +212,7 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 							</div>
 
 							<div className='bg-primary text-white px-4 rounded-md py-1'>
-								{totalTimeRemaining} seconds remaining
+								{formatTime(totalTimeRemaining)} remaining
 							</div>
 						</div>
 
