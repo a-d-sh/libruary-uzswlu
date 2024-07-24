@@ -156,6 +156,13 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 		setTimeUp(true)
 		setShowResults(true)
 		saveQuizResults(results)
+		clearLocalStorage()
+	}
+
+	const clearLocalStorage = () => {
+		localStorage.removeItem('activeQuestion')
+		localStorage.removeItem('quizResults')
+		localStorage.removeItem('quizStartTime')
 	}
 
 	const sanitizedQuestion = sanitizeHtml(question, {
