@@ -35,6 +35,7 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 			router.push('/stats')
 		}
 	}, [user, router])
+
 	const [activeQuestion, setActiveQuestion] = useState(0)
 	const [selectedAnswer, setSelectedAnswer] = useState('')
 	const [checked, setChecked] = useState(false)
@@ -77,30 +78,7 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 		setTimeUp(true)
 		stopTimer()
 		setShowResults(true)
-		fetch('/api/quizResults', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				userId: userId,
-				quizScore: results.score,
-				correctAnswers: results.correctAnswers,
-				wrongAnswers: results.wrongAnswers,
-			}),
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('Network response was not working fam')
-				}
-				return response.json()
-			})
-			.then(data => {
-				console.log('Quiz results saved successfully:', data)
-			})
-			.catch(error => {
-				console.error('Error saving quiz results:', error)
-			})
+		saveQuizResults(results)
 	}
 
 	useEffect(() => {
@@ -124,50 +102,58 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 	const nextQuestion = () => {
 		if (!timeUp) {
 			setSelectedAnswerIndex(null)
-			setResults(prev =>
-				selectedAnswer
-					? {
-							...prev,
-							score: prev.score + 5,
-							correctAnswers: prev.correctAnswers + 1,
-						}
-					: {
-							...prev,
-							wrongAnswers: prev.wrongAnswers + 1,
-						}
-			)
+			const newResults = selectedAnswer
+				? {
+						...results,
+						score: results.score + 5,
+						correctAnswers: results.correctAnswers + 1,
+					}
+				: {
+						...results,
+						wrongAnswers: results.wrongAnswers + 1,
+					}
+			setResults(newResults)
+
 			if (activeQuestion !== questions.length - 1) {
 				setActiveQuestion(prev => prev + 1)
 			} else {
 				setShowResults(true)
 				stopTimer()
-				fetch('/api/quizResults', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						userId: userId,
-						quizScore: results.score,
-						correctAnswers: results.correctAnswers,
-						wrongAnswers: results.wrongAnswers,
-					}),
-				})
-					.then(response => {
-						if (!response.ok) {
-							throw new Error('Network response was not working fam')
-						}
-						return response.json()
-					})
-					.then(data => {
-						console.log('Quiz results saved successfully:', data)
-					})
-					.catch(error => {
-						console.error('Error saving quiz results:', error)
-					})
+				saveQuizResults(newResults)
 			}
 			setChecked(false)
 		}
+	}
+
+	const saveQuizResults = (results: {
+		score: number
+		correctAnswers: number
+		wrongAnswers: number
+	}) => {
+		fetch('/api/quizResults', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				userId: userId,
+				quizScore: results.score,
+				correctAnswers: results.correctAnswers,
+				wrongAnswers: results.wrongAnswers,
+			}),
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok')
+				}
+				return response.json()
+			})
+			.then(data => {
+				console.log('Quiz results saved successfully:', data)
+			})
+			.catch(error => {
+				console.error('Error saving quiz results:', error)
+			})
 	}
 
 	const sanitizedQuestion = sanitizeHtml(question, {
@@ -222,15 +208,6 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 									? 'Finish'
 									: 'Next Question →'}
 							</button>
-							{/* <button
-								onClick={nextQuestion}
-								disabled={!checked}
-								className='font-bold'
-							>
-								{activeQuestion === questions.length - 1
-									? 'Finish'
-									: 'Next Question →'}
-							</button> */}
 						</div>
 					</>
 				) : (
@@ -247,12 +224,6 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 						<div className='grid lg:grid-cols-1 md:grid-cols-2 gap-10 mt-8'>
 							<StatCard title=' Total Score' value={`${results.score}`} />
 						</div>
-						{/* <button
-							onClick={() => window.location.reload()}
-							className='mt-10 font-bold uppercase'
-						>
-							Restart Quiz
-						</button> */}
 					</div>
 				)}
 			</div>
