@@ -53,7 +53,6 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 			: { score: 0, correctAnswers: 0, wrongAnswers: 0 }
 	})
 	const [totalTimeRemaining, setTotalTimeRemaining] = useState(900)
-	const [timerRunning, setTimerRunning] = useState(false)
 	const [timeUp, setTimeUp] = useState(false)
 
 	const { question, answers, correctAnswer } = questions[activeQuestion]
@@ -69,26 +68,19 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 	useEffect(() => {
 		const startTime = localStorage.getItem('quizStartTime')
 		let interval: NodeJS.Timeout
-		if (startTime) {
-			const elapsed = Math.floor((Date.now() - parseInt(startTime)) / 1000)
-			const remaining = 900 - elapsed
-			setTotalTimeRemaining(remaining)
-			if (remaining > 0) {
-				interval = setInterval(() => {
-					setTotalTimeRemaining(prevTime => {
-						const newTime = prevTime - 1
-						if (newTime <= 0) {
-							handleTimeUp()
-							clearInterval(interval)
-						}
-						return newTime
-					})
-				}, 1000)
-			} else {
-				handleTimeUp()
-			}
-		} else {
+
+		if (!startTime) {
 			localStorage.setItem('quizStartTime', Date.now().toString())
+		}
+
+		const startTimeNow = parseInt(
+			localStorage.getItem('quizStartTime') || Date.now().toString()
+		)
+		const elapsed = Math.floor((Date.now() - startTimeNow) / 1000)
+		const remaining = 900 - elapsed
+		setTotalTimeRemaining(remaining)
+
+		if (remaining > 0) {
 			interval = setInterval(() => {
 				setTotalTimeRemaining(prevTime => {
 					const newTime = prevTime - 1
@@ -99,6 +91,8 @@ const Quiz = ({ questions, userId, user }: QuizProps) => {
 					return newTime
 				})
 			}, 1000)
+		} else {
+			handleTimeUp()
 		}
 
 		return () => clearInterval(interval)
