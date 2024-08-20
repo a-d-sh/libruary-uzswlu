@@ -5,7 +5,7 @@ import { fetchUsers } from '../(auth)/actions/fetchUsers'
 export const dynamic = 'force-dynamic'
 
 async function getData() {
-	const query = `*[_type == "questions"] | order(_createdAt asc) {
+	const query = `*[_type == "questions"] | order(_createdAt desk) {
     question,
     answers,
     correctAnswer
